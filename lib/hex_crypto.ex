@@ -1,7 +1,7 @@
-defmodule Hex.Crypto.Encryption do
-  alias Hex.Crypto
-  alias Hex.Crypto.ContentEncryptor
-  alias Hex.Crypto.KeyManager
+defmodule HexCrypto do
+  alias HexCrypto.Utils
+  alias HexCrypto.ContentEncryptor
+  alias HexCrypto.KeyManager
 
   def encrypt({tag, plain_text}, protected, opts) do
     case KeyManager.encrypt(protected, opts) do
@@ -21,7 +21,7 @@ defmodule Hex.Crypto.Encryption do
           cipher_tag: cipher_tag
         }
         |> :erlang.term_to_binary()
-        |> Crypto.base64url_encode()
+        |> Utils.base64url_encode()
 
       encrypt_init_error ->
         encrypt_init_error
@@ -29,7 +29,7 @@ defmodule Hex.Crypto.Encryption do
   end
 
   def decrypt({tag, cipher_text}, opts) do
-    {:ok, cipher_text} = Crypto.base64url_decode(cipher_text)
+    {:ok, cipher_text} = Utils.base64url_decode(cipher_text)
 
     %{
       protected: protected,
@@ -37,10 +37,10 @@ defmodule Hex.Crypto.Encryption do
       iv: iv,
       cipher_text: cipher_text,
       cipher_tag: cipher_tag
-    } = Hex.Utils.safe_binary_to_term!(cipher_text, [:safe])
+    } = Utils.safe_binary_to_term!(cipher_text, [:safe])
 
     aad = tag <> protected
-    protected = Hex.Utils.safe_binary_to_term!(protected, [:safe])
+    protected = Utils.safe_binary_to_term!(protected, [:safe])
 
     case KeyManager.decrypt(protected, encrypted_key, opts) do
       {:ok, key, content_encryptor} ->

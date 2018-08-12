@@ -1,4 +1,4 @@
-defmodule Hex.Crypto.PKCS5 do
+defmodule HexCrypto.PKCS5 do
   @moduledoc ~S"""
   PKCS #5: Password-Based Cryptography Specification Version 2.0
 
