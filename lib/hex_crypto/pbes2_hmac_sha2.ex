@@ -1,7 +1,7 @@
-defmodule Hex.Crypto.PBES2_HMAC_SHA2 do
-  alias Hex.Crypto.ContentEncryptor
-  alias Hex.Crypto.KeyManager
-  alias Hex.Crypto.PKCS5
+defmodule HexCrypto.PBES2_HMAC_SHA2 do
+  alias HexCrypto.ContentEncryptor
+  alias HexCrypto.KeyManager
+  alias HexCrypto.PKCS5
 
   @behaviour KeyManager
 

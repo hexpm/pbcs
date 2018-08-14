@@ -1,6 +1,6 @@
-defmodule Hex.Crypto.PKCS5Test do
+defmodule HexCrypto.PKCS5Test do
   use ExUnit.Case, async: true
-  import Hex.Crypto.PKCS5
+  import HexCrypto.PKCS5
 
   defp check_vectors(list) do
     Enum.each(list, fn {password, salt, iterations, derived_key_length, hash, derived_key} ->

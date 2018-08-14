@@ -1,4 +1,4 @@
-defmodule Hex.Crypto.PublicKey do
+defmodule HexCrypto.PublicKey do
   @doc """
   Decodes a public key and raises if the key is invalid.
   """

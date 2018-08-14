@@ -1,5 +1,5 @@
-defmodule Hex.Crypto.AES_CBC_HMAC_SHA2 do
-  alias Hex.Crypto.ContentEncryptor
+defmodule HexCrypto.AES_CBC_HMAC_SHA2 do
+  alias HexCrypto.ContentEncryptor
 
   @behaviour ContentEncryptor
 
