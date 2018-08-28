@@ -1,6 +1,6 @@
-defmodule HexCrypto.KeyManager do
-  alias HexCrypto
-  alias HexCrypto.ContentEncryptor
+defmodule PBCS.KeyManager do
+  alias PBCS
+  alias PBCS.ContentEncryptor
   alias __MODULE__
 
   @type t :: %KeyManager{
@@ -72,9 +72,9 @@ defmodule HexCrypto.KeyManager do
     end
   end
 
-  defp key_manager_module("PBES2-HS256"), do: {:ok, HexCrypto.PBES2_HMAC_SHA2}
-  defp key_manager_module("PBES2-HS384"), do: {:ok, HexCrypto.PBES2_HMAC_SHA2}
-  defp key_manager_module("PBES2-HS512"), do: {:ok, HexCrypto.PBES2_HMAC_SHA2}
+  defp key_manager_module("PBES2-HS256"), do: {:ok, PBCS.PBES2_HMAC_SHA2}
+  defp key_manager_module("PBES2-HS384"), do: {:ok, PBCS.PBES2_HMAC_SHA2}
+  defp key_manager_module("PBES2-HS512"), do: {:ok, PBCS.PBES2_HMAC_SHA2}
   defp key_manager_module(alg), do: {:error, "Unrecognized KeyManager algorithm: #{inspect(alg)}"}
 
   defp fetch_content_encryptor(key_manager, protected, opts) do
