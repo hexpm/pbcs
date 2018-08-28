@@ -1,5 +1,5 @@
-defmodule HexCrypto.AES_GCM do
-  alias HexCrypto.ContentEncryptor
+defmodule PKCS5.AES_GCM do
+  alias PKCS5.ContentEncryptor
 
   @behaviour ContentEncryptor
 
