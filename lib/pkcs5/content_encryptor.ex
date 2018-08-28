@@ -1,5 +1,5 @@
-defmodule HexCrypto.ContentEncryptor do
-  alias HexCrypto
+defmodule PKCS5.ContentEncryptor do
+  alias PKCS5
   alias __MODULE__
 
   @type t :: %ContentEncryptor{
@@ -74,11 +74,11 @@ defmodule HexCrypto.ContentEncryptor do
     module.key_length(params)
   end
 
-  defp content_encryptor_module("A128CBC-HS256"), do: HexCrypto.AES_CBC_HMAC_SHA2
-  defp content_encryptor_module("A192CBC-HS384"), do: HexCrypto.AES_CBC_HMAC_SHA2
-  defp content_encryptor_module("A256CBC-HS512"), do: HexCrypto.AES_CBC_HMAC_SHA2
-  defp content_encryptor_module("A128GCM"), do: HexCrypto.AES_GCM
-  defp content_encryptor_module("A192GCM"), do: HexCrypto.AES_GCM
-  defp content_encryptor_module("A256GCM"), do: HexCrypto.AES_GCM
+  defp content_encryptor_module("A128CBC-HS256"), do: PKCS5.AES_CBC_HMAC_SHA2
+  defp content_encryptor_module("A192CBC-HS384"), do: PKCS5.AES_CBC_HMAC_SHA2
+  defp content_encryptor_module("A256CBC-HS512"), do: PKCS5.AES_CBC_HMAC_SHA2
+  defp content_encryptor_module("A128GCM"), do: PKCS5.AES_GCM
+  defp content_encryptor_module("A192GCM"), do: PKCS5.AES_GCM
+  defp content_encryptor_module("A256GCM"), do: PKCS5.AES_GCM
   defp content_encryptor_module(_), do: :error
 end
