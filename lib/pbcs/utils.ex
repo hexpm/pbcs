@@ -1,4 +1,4 @@
-defmodule HexCrypto.Utils do
+defmodule PBCS.Utils do
   def base64url_encode(binary) do
     try do
       Base.url_encode64(binary, padding: false)

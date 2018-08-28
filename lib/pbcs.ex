@@ -1,7 +1,13 @@
-defmodule HexCrypto do
-  alias HexCrypto.Utils
-  alias HexCrypto.ContentEncryptor
-  alias HexCrypto.KeyManager
+defmodule PBCS do
+  @moduledoc ~S"""
+  PKCS #5: Password-Based Cryptography Specification Version 2.0
+
+  See: https://tools.ietf.org/html/rfc2898
+  """
+
+  alias PBCS.Utils
+  alias PBCS.ContentEncryptor
+  alias PBCS.KeyManager
 
   def encrypt({tag, plain_text}, protected, opts) do
     case KeyManager.encrypt(protected, opts) do
