@@ -10,6 +10,7 @@ defmodule PBCS.MixProject do
       deps: deps(),
       source_url: "https://github.com/hexpm/pbcs",
       docs: [extras: ["README.md"], main: "readme"],
+      description: description(),
       package: package()
     ]
   end
@@ -24,6 +25,10 @@ defmodule PBCS.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     []
+  end
+
+  defp description do
+    "PKCS #5: Password-Based Cryptography Specification Version 2.0"
   end
 
   defp package do
