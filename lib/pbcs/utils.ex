@@ -1,4 +1,6 @@
 defmodule PBCS.Utils do
+  @moduledoc false
+
   def base64url_encode(binary) do
     try do
       Base.url_encode64(binary, padding: false)

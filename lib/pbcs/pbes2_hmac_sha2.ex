@@ -1,16 +1,16 @@
 defmodule PBCS.PBES2_HMAC_SHA2 do
-  alias PBCS.ContentEncryptor
-  alias PBCS.KeyManager
-  alias PBCS.PKCS5
-
-  @behaviour KeyManager
-
   @moduledoc ~S"""
   Direct Key Derivation with PBES2 and HMAC-SHA-2.
 
   See: https://tools.ietf.org/html/rfc7518#section-4.8
   See: https://tools.ietf.org/html/rfc2898#section-6.2
   """
+
+  alias PBCS.ContentEncryptor
+  alias PBCS.KeyManager
+  alias PBCS.PKCS5
+
+  @behaviour KeyManager
 
   @spec derive_key(String.t(), binary, pos_integer, non_neg_integer, :sha256 | :sha384 | :sha512) ::
           binary
