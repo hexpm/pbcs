@@ -1,14 +1,14 @@
 defmodule PBCS.AES_GCM do
-  alias PBCS.ContentEncryptor
-
-  @behaviour ContentEncryptor
-
   @moduledoc ~S"""
-  Content Encryption with AES GCM
+  Content Encryption with AES GCM.
 
   See: https://tools.ietf.org/html/rfc7518#section-5.3
   See: http://csrc.nist.gov/publications/nistpubs/800-38D/SP-800-38D.pdf
   """
+
+  alias PBCS.ContentEncryptor
+
+  @behaviour ContentEncryptor
 
   @spec content_encrypt({binary, binary}, <<_::16>> | <<_::24>> | <<_::32>>, <<_::12>>) ::
           {binary, <<_::16>>}

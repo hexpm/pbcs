@@ -5,9 +5,10 @@ defmodule PBCS.MixProject do
     [
       app: :pbcs,
       version: "0.1.0",
-      elixir: "~> 1.6",
+      elixir: "~> 1.0",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
+      source_url: "https://github.com/hexpm/pbcs",
       docs: [extras: ["README.md"], main: "readme"],
       package: package()
     ]

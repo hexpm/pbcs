@@ -1,4 +1,6 @@
 defmodule PBCS.PKCS5 do
+  @moduledoc false
+
   def pbkdf2(password, salt, iterations, derived_key_length, hash)
       when is_binary(password) and is_binary(salt) and is_integer(iterations) and iterations >= 1 and
              is_integer(derived_key_length) and derived_key_length >= 0 do

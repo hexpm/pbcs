@@ -1,4 +1,10 @@
 defmodule PBCS.ContentEncryptor do
+  @moduledoc """
+  Callback module for content encryptors.
+
+  Implement this behaviour if you want to implement your own content encryptor.
+  """
+
   alias PBCS
   alias __MODULE__
 

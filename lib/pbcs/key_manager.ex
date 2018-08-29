@@ -1,4 +1,10 @@
 defmodule PBCS.KeyManager do
+  @moduledoc """
+  Callback module for key managers.
+
+  Implement this behaviour if you want to implement your own key manager.
+  """
+
   alias PBCS
   alias PBCS.ContentEncryptor
   alias __MODULE__
@@ -23,6 +29,7 @@ defmodule PBCS.KeyManager do
               content_encryptor :: ContentEncryptor.t()
             ) :: {:ok, binary} | {:error, String.t()}
 
+  @doc false
   def init(%{alg: alg} = protected, opts) do
     case key_manager_module(alg) do
       {:ok, module} ->
@@ -40,6 +47,7 @@ defmodule PBCS.KeyManager do
     end
   end
 
+  @doc false
   def encrypt(protected, opts) do
     case init(protected, opts) do
       {:ok, %KeyManager{module: module, params: params}, content_encryptor} ->
@@ -56,6 +64,7 @@ defmodule PBCS.KeyManager do
     end
   end
 
+  @doc false
   def decrypt(protected, encrypted_key, opts) do
     case init(protected, opts) do
       {:ok, %KeyManager{module: module, params: params}, content_encryptor} ->
