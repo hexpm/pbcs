@@ -29,7 +29,7 @@ defmodule PBCS.KeyManager do
               content_encryptor :: ContentEncryptor.t()
             ) :: {:ok, binary} | {:error, String.t()}
 
-            @doc false
+  @doc false
   def init(%{alg: alg} = protected, opts) do
     case key_manager_module(alg) do
       {:ok, module} ->
