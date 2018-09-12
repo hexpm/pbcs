@@ -3,13 +3,25 @@
 [![Hex version](https://img.shields.io/hexpm/v/pbcs.svg "Hex version")](https://hex.pm/packages/pbcs)
 [![Build Status](https://travis-ci.org/hexpm/pbcs.svg)](https://travis-ci.org/hexpm/pbcs)
 
-PKCS #5: Password-Based Cryptography Specification Version 2.0
+The PBCS library securely protects secrets using passwords by following the
+style and recommendations in [PKCS #5 2.1](https://tools.ietf.org/html/rfc8018).
+As in PKCS #5, this library uses a salt to protect against dictionary attacks
+and iterates the key derivation function to increase the computation cost of
+attacks. These parameters and the cryptographic algorithms used are
+configurable.
 
-  See: https://tools.ietf.org/html/rfc2898
+Key derivation algorithms include:
+
+* `PBES2-HS512`, `PBES2-HS384`, `PBES2-HS256` - PBES2 and HMAC-SHA-2. See [RFC 7518 4.8](https://tools.ietf.org/html/rfc7518#section-4.8) and [RFC 2898 6.2](https://tools.ietf.org/html/rfc2898#section-6.2)
+
+Content encryption algorithms include:
+
+* `A256GCM`, `A192GCM`, `A128GCM` - AES GCM. See [RFC 7518 5.3](https://tools.ietf.org/html/rfc7518#section-5.3)
+* `A256CBC-HS512`, `A192CBC-HS384`, `A128CBC-HS256` - AES_CBC_HMAC_SHA2. See [RFC 7518 5.2.6](https://tools.ietf.org/html/rfc7518#section-5.2.6)
 
 ## Usage
 
-```
+```elixir
 protected = %{
   alg: "PBES2-HS512",
   enc: "A256GCM",
