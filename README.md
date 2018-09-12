@@ -1,5 +1,8 @@
 # PBCS
 
+[![Hex version](https://img.shields.io/hexpm/v/pbcs.svg "Hex version")](https://hex.pm/packages/pbcs)
+[![Build Status](https://travis-ci.org/hexpm/pbcs.svg)](https://travis-ci.org/hexpm/pbcs)
+
 PKCS #5: Password-Based Cryptography Specification Version 2.0
 
   See: https://tools.ietf.org/html/rfc2898
