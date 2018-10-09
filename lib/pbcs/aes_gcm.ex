@@ -10,16 +10,16 @@ defmodule PBCS.AES_GCM do
 
   @behaviour ContentEncryptor
 
-  @spec content_encrypt({binary, binary}, <<_::16>> | <<_::24>> | <<_::32>>, <<_::12>>) ::
-          {binary, <<_::16>>}
+  @spec content_encrypt({binary, PBCS.plain_text()}, binary(), binary()) ::
+          {PBCS.cipher_text(), binary()}
   def content_encrypt({aad, plain_text}, key, iv)
       when is_binary(aad) and is_binary(plain_text) and bit_size(key) in [128, 192, 256] and
              bit_size(iv) === 96 do
     :crypto.block_encrypt(:aes_gcm, key, iv, {aad, plain_text})
   end
 
-  @spec content_decrypt({binary, binary, <<_::16>>}, <<_::16>> | <<_::24>> | <<_::32>>, <<_::12>>) ::
-          {:ok, binary} | :error
+  @spec content_decrypt({binary(), PBCS.cipher_text(), PBCS.tag()}, binary(), binary()) ::
+          {:ok, PBCS.plain_text()} | :error
   def content_decrypt({aad, cipher_text, cipher_tag}, key, iv)
       when is_binary(aad) and is_binary(cipher_text) and bit_size(cipher_tag) === 128 and
              bit_size(key) in [128, 192, 256] and bit_size(iv) === 96 do

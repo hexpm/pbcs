@@ -55,10 +55,18 @@ defmodule PBCS.ContentEncryptor do
     end
   end
 
+  @spec encrypt(PBCS.ContentEncryptor.t(), binary(), binary(), {binary(), PBCS.plain_text()}) ::
+          {binary(), PBCS.cipher_text()}
   def encrypt(%ContentEncryptor{module: module, params: params}, key, iv, {aad, plain_text}) do
     module.encrypt(params, key, iv, {aad, plain_text})
   end
 
+  @spec decrypt(
+          PBCS.ContentEncryptor.t(),
+          binary(),
+          binary(),
+          {binary(), PBCS.cipher_text(), binary()}
+        ) :: {:ok, PBCS.plain_text()} | :error
   def decrypt(
         %ContentEncryptor{module: module, params: params},
         key,
@@ -68,14 +76,17 @@ defmodule PBCS.ContentEncryptor do
     module.decrypt(params, key, iv, {aad, cipher_text, cipher_tag})
   end
 
+  @spec generate_key(PBCS.ContentEncryptor.t()) :: binary()
   def generate_key(%ContentEncryptor{module: module, params: params}) do
     module.generate_key(params)
   end
 
+  @spec generate_iv(PBCS.ContentEncryptor.t()) :: binary()
   def generate_iv(%ContentEncryptor{module: module, params: params}) do
     module.generate_iv(params)
   end
 
+  @spec key_length(PBCS.ContentEncryptor.t()) :: pos_integer()
   def key_length(%ContentEncryptor{module: module, params: params}) do
     module.key_length(params)
   end

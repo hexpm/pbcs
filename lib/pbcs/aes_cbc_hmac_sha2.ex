@@ -9,8 +9,8 @@ defmodule PBCS.AES_CBC_HMAC_SHA2 do
   See: https://tools.ietf.org/html/rfc7518#section-5.2.6
   """
 
-  @spec content_encrypt({binary, binary}, <<_::32>> | <<_::48>> | <<_::64>>, <<_::16>>) ::
-          {binary, <<_::16>> | <<_::24>> | <<_::32>>}
+  @spec content_encrypt({binary, PBCS.plain_text()}, binary(), binary()) ::
+          {PBCS.cipher_text(), binary()}
   def content_encrypt({aad, plain_text}, key, iv)
       when is_binary(aad) and is_binary(plain_text) and bit_size(key) in [256, 384, 512] and
              bit_size(iv) === 128 do
@@ -25,11 +25,8 @@ defmodule PBCS.AES_CBC_HMAC_SHA2 do
     {cipher_text, cipher_tag}
   end
 
-  @spec content_decrypt(
-          {binary, binary, <<_::16>> | <<_::24>> | <<_::32>>},
-          <<_::32>> | <<_::48>> | <<_::64>>,
-          <<_::16>>
-        ) :: {:ok, binary} | :error
+  @spec content_decrypt({binary(), PBCS.cipher_text(), PBCS.tag()}, binary(), binary()) ::
+          {:ok, PBCS.plain_text()} | :error
   def content_decrypt({aad, cipher_text, cipher_tag}, key, iv)
       when is_binary(aad) and is_binary(cipher_text) and bit_size(cipher_tag) in [128, 192, 256] and
              bit_size(key) in [256, 384, 512] and bit_size(iv) === 128 do

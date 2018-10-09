@@ -15,7 +15,8 @@ defmodule PBCS do
   @type protected :: %{alg: String.t(), enc: String.t(), p2c: pos_integer, p2s: binary}
   @type opts :: Keyword.t()
 
-  @spec encrypt({tag, plain_text}, protected, opts) :: cipher_text
+  @spec encrypt({tag(), plain_text()}, protected(), opts()) ::
+          cipher_text() | {:error, String.t()}
   def encrypt({tag, plain_text}, protected, opts) do
     case KeyManager.encrypt(protected, opts) do
       {:ok, protected, key, encrypted_key, content_encryptor} ->
@@ -41,7 +42,7 @@ defmodule PBCS do
     end
   end
 
-  @spec decrypt({tag, cipher_text}, opts) :: plain_text
+  @spec decrypt({tag(), cipher_text()}, opts()) :: plain_text() | {:error, String.t()} | :error
   def decrypt({tag, cipher_text}, opts) do
     {:ok, cipher_text} = Utils.base64url_decode(cipher_text)
 
