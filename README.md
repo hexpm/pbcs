@@ -19,6 +19,18 @@ Content encryption algorithms include:
 * `A256GCM`, `A192GCM`, `A128GCM` - AES GCM. See [RFC 7518 5.3](https://tools.ietf.org/html/rfc7518#section-5.3)
 * `A256CBC-HS512`, `A192CBC-HS384`, `A128CBC-HS256` - AES_CBC_HMAC_SHA2. See [RFC 7518 5.2.6](https://tools.ietf.org/html/rfc7518#section-5.2.6)
 
+## Installation
+
+Add pbcs to the `deps` section of your mix.exs file:
+
+```elixir
+def deps do
+  [
+    {:pbcs, "~> 0.1.0"}
+  ]
+end
+```
+
 ## Usage
 
 ```elixir
