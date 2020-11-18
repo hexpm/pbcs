@@ -1,31 +1,32 @@
 defmodule PBCS.MixProject do
   use Mix.Project
 
+  @version "0.1.1"
+  @source_url "https://github.com/hexpm/pbcs"
+
   def project do
     [
       app: :pbcs,
-      version: "0.1.1",
+      version: @version,
       elixir: "~> 1.0",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      source_url: "https://github.com/hexpm/pbcs",
-      docs: [extras: ["README.md"], main: "readme"],
+      source_url: @source_url,
+      docs: [source_ref: "v#{@version}", main: "readme", extras: ["README.md"]],
       description: description(),
       package: package()
     ]
   end
 
-  # Run "mix help compile.app" to learn about applications.
   def application do
     [
       extra_applications: [:crypto]
     ]
   end
 
-  # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:ex_doc, "~> 0.18", only: :dev}
+      {:ex_doc, "~> 0.18", only: :dev, runtime: false}
     ]
   end
 
@@ -35,8 +36,8 @@ defmodule PBCS.MixProject do
 
   defp package do
     [
-      licenses: ["Apache 2.0"],
-      links: %{"Github" => "https://github.com/hexpm/pbcs"}
+      licenses: ["Apache-2.0"],
+      links: %{"GitHub" => "https://github.com/hexpm/pbcs"}
     ]
   end
 end
