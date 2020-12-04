@@ -1,5 +1,11 @@
 # Changelog
 
+
+## v0.1.2
+
+* Enhancements
+  * Clean up Elixir 1.11 warnings
+
 ## v0.1.1
 
 * Bug fixes
