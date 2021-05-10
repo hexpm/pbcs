@@ -1,6 +1,6 @@
 defmodule PBCS.AES_CBC_HMAC_SHA2 do
   alias PBCS.ContentEncryptor
-
+  alias PBCS.CryptoWrapper
   @behaviour ContentEncryptor
 
   @moduledoc ~S"""
@@ -80,36 +80,23 @@ defmodule PBCS.AES_CBC_HMAC_SHA2 do
 
   # Support new and old style AES-CBC calls.
   defp aes_cbc_encrypt(key, iv, plain_text) do
-    :crypto.block_encrypt(:aes_cbc, key, iv, plain_text)
-  rescue
-    FunctionClauseError ->
-      key
-      |> bit_size()
-      |> bit_size_to_cipher()
-      |> :crypto.block_encrypt(key, iv, plain_text)
+    CryptoWrapper.block_encrypt(:aes_cbc, key, iv, plain_text)
   end
 
-  # Support new and old style AES-CBC calls.
   defp aes_cbc_decrypt(key, iv, cipher_text) do
-    :crypto.block_decrypt(:aes_cbc, key, iv, cipher_text)
-  rescue
-    FunctionClauseError ->
-      key
-      |> bit_size()
-      |> bit_size_to_cipher()
-      |> :crypto.block_decrypt(key, iv, cipher_text)
+    CryptoWrapper.block_decrypt(:aes_cbc, key, iv, cipher_text)
   end
 
   defp hmac_sha2(mac_key, mac_data) when bit_size(mac_key) === 128 do
-    :crypto.hmac(:sha256, mac_key, mac_data)
+    CryptoWrapper.hmac(:sha256, mac_key, mac_data)
   end
 
   defp hmac_sha2(mac_key, mac_data) when bit_size(mac_key) === 192 do
-    :crypto.hmac(:sha384, mac_key, mac_data)
+    CryptoWrapper.hmac(:sha384, mac_key, mac_data)
   end
 
   defp hmac_sha2(mac_key, mac_data) when bit_size(mac_key) === 256 do
-    :crypto.hmac(:sha512, mac_key, mac_data)
+    CryptoWrapper.hmac(:sha512, mac_key, mac_data)
   end
 
   # Pads a message using the PKCS #7 cryptographic message syntax.
@@ -150,8 +137,4 @@ defmodule PBCS.AES_CBC_HMAC_SHA2 do
   defp encoding_to_key_length("A128CBC-HS256"), do: 32
   defp encoding_to_key_length("A192CBC-HS384"), do: 48
   defp encoding_to_key_length("A256CBC-HS512"), do: 64
-
-  defp bit_size_to_cipher(128), do: :aes_cbc128
-  defp bit_size_to_cipher(192), do: :aes_cbc192
-  defp bit_size_to_cipher(256), do: :aes_cbc256
 end

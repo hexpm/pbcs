@@ -1,10 +1,11 @@
 defmodule PBCS.PKCS5 do
   @moduledoc false
+  alias PBCS.CryptoWrapper
 
   def pbkdf2(password, salt, iterations, derived_key_length, hash)
       when is_binary(password) and is_binary(salt) and is_integer(iterations) and iterations >= 1 and
              is_integer(derived_key_length) and derived_key_length >= 0 do
-    hash_length = byte_size(:crypto.hmac(hash, <<>>, <<>>))
+    hash_length = byte_size(CryptoWrapper.hmac(hash, <<>>, <<>>))
 
     if derived_key_length > 0xFFFFFFFF * hash_length do
       raise ArgumentError, "derived key too long"
@@ -42,13 +43,17 @@ defmodule PBCS.PKCS5 do
 
   defp pbkdf2_exor(password, salt, iterations, hash, i = 1, counter, <<>>, <<>>) do
     next =
-      :crypto.hmac(hash, password, <<salt::binary, counter::1-unsigned-big-integer-unit(32)>>)
+      CryptoWrapper.hmac(
+        hash,
+        password,
+        <<salt::binary, counter::1-unsigned-big-integer-unit(32)>>
+      )
 
     pbkdf2_exor(password, salt, iterations, hash, i + 1, counter, next, next)
   end
 
   defp pbkdf2_exor(password, salt, iterations, hash, i, counter, prev, curr) do
-    next = :crypto.hmac(hash, password, prev)
+    next = CryptoWrapper.hmac(hash, password, prev)
     curr = :crypto.exor(next, curr)
     pbkdf2_exor(password, salt, iterations, hash, i + 1, counter, next, curr)
   end
