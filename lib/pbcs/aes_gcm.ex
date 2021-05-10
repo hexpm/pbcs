@@ -7,6 +7,7 @@ defmodule PBCS.AES_GCM do
   """
 
   alias PBCS.ContentEncryptor
+  alias PBCS.CryptoWrapper
 
   @behaviour ContentEncryptor
 
@@ -15,7 +16,7 @@ defmodule PBCS.AES_GCM do
   def content_encrypt({aad, plain_text}, key, iv)
       when is_binary(aad) and is_binary(plain_text) and bit_size(key) in [128, 192, 256] and
              bit_size(iv) === 96 do
-    :crypto.block_encrypt(:aes_gcm, key, iv, {aad, plain_text})
+    CryptoWrapper.block_encrypt(:aes_gcm, key, iv, {aad, plain_text})
   end
 
   @spec content_decrypt({binary(), PBCS.cipher_text(), PBCS.tag()}, binary(), binary()) ::
@@ -23,7 +24,7 @@ defmodule PBCS.AES_GCM do
   def content_decrypt({aad, cipher_text, cipher_tag}, key, iv)
       when is_binary(aad) and is_binary(cipher_text) and bit_size(cipher_tag) === 128 and
              bit_size(key) in [128, 192, 256] and bit_size(iv) === 96 do
-    case :crypto.block_decrypt(:aes_gcm, key, iv, {aad, cipher_text, cipher_tag}) do
+    case CryptoWrapper.block_decrypt(:aes_gcm, key, iv, {aad, cipher_text, cipher_tag}) do
       plain_text when is_binary(plain_text) ->
         {:ok, plain_text}
 
