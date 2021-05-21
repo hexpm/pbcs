@@ -1,0 +1,71 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  format:
+    name: Format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Install OTP and Elixir
+        uses: erlef/setup-elixir@v1
+        with:
+          otp-version: 24.0
+          elixir-version: 1.12.0
+
+      - run: mix deps.get
+      - run: mix deps.compile
+      - run: mix compile --warnings-as-errors
+      - run: mix format --check-formatted
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        pair:
+          - erlang: 24.0
+            elixir: master
+          - erlang: master
+            elixir: 1.12.0
+          - erlang: 24.0
+            elixir: 1.12.0
+          - erlang: 23.1
+            elixir: 1.11.3
+          - erlang: 23.1
+            elixir: 1.10.4
+          - erlang: 22.3
+            elixir: 1.9.4
+          - erlang: 21.3
+            elixir: 1.8.1
+          - erlang: 21.3
+            elixir: 1.7.2
+          - erlang: 21.3
+            elixir: 1.6.6
+          - erlang: 20.3
+            elixir: 1.5.3
+          - erlang: 20.2
+            elixir: 1.4.5
+
+    steps:
+      - uses: actions/checkout@v1
+      
+      - name: Install OTP and Elixir
+        uses: erlef/setup-beam@v1.7
+        with:
+          otp-version: ${{matrix.pair.erlang}}
+          elixir-version: ${{matrix.pair.elixir}}
+      
+      - name: Install Mix Dependencies
+        if: steps.mix-cache.outputs.cache-hit != 'true'
+        run: |
+          mix local.rebar --force
+          mix local.hex --force
+          mix deps.get
+      
+      - name: Run tests
+        run: mix test
