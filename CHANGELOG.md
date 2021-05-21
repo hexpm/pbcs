@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.1.3
+
+* Enhancements
+  * Update crypto API calls for OTP 24 support
 
 ## v0.1.2
 
