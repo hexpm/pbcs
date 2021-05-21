@@ -1,7 +1,7 @@
 # PBCS
 
 [![Hex version](https://img.shields.io/hexpm/v/pbcs.svg "Hex version")](https://hex.pm/packages/pbcs)
-[![Build Status](https://travis-ci.org/hexpm/pbcs.svg)](https://travis-ci.org/hexpm/pbcs)
+[![CI](https://github.com/hexpm/hexpm/workflows/CI/badge.svg)](https://github.com/hexpm/pbcs/actions?query=workflow%3ACI)
 
 The PBCS library securely protects secrets using passwords by following the
 style and recommendations in [PKCS #5 2.1](https://tools.ietf.org/html/rfc8018).
