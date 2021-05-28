@@ -15,11 +15,21 @@ defmodule PBCS.CryptoWrapper do
   # Support new and old style AES-CBC calls.
   case function_exported?(:crypto, :crypto_one_time, 5) do
     true ->
-      def block_decrypt(cipher, key, iv, cipher_text),
-        do: :crypto.crypto_one_time(cipher, key, iv, cipher_text, encrypt: false)
+      def block_decrypt(cipher, key, iv, {aad, cipher_text, cipher_tag}) do
+        cipher = cipher_alias(cipher, bit_size(key))
+        :crypto.crypto_one_time_aead(cipher, key, iv, cipher_text, aad, cipher_tag, false)
+      end
 
-      def block_encrypt(cipher, key, iv, plain_text),
-        do: :crypto.crypto_one_time(cipher, key, iv, plain_text, encrypt: true)
+      def block_encrypt(cipher, key, iv, {aad, plain_text}) do
+        cipher = cipher_alias(cipher, bit_size(key))
+        :crypto.crypto_one_time_aead(cipher, key, iv, plain_text, aad, true)
+      end
+
+      # TODO: remove when we require OTP 24 (since it has similar alias handling)
+      defp cipher_alias(:aes_gcm, 128), do: :aes_128_gcm
+      defp cipher_alias(:aes_gcm, 192), do: :aes_192_gcm
+      defp cipher_alias(:aes_gcm, 256), do: :aes_256_gcm
+      defp cipher_alias(other, _), do: other
 
     false ->
       def block_decrypt(cipher, key, iv, cipher_text) do

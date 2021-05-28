@@ -111,4 +111,18 @@ defmodule PBCSTest do
     ]
     |> check_vectors(19_000, 64, :sha512)
   end
+
+  describe "A256GCM" do
+    test "encrypt/decrypt" do
+      protected = %{
+        alg: "PBES2-HS512",
+        enc: "A256GCM",
+        p2c: 4096,
+        p2s: :crypto.strong_rand_bytes(32)
+      }
+
+      cipher_text = PBCS.encrypt({"", "foo"}, protected, password: "bar")
+      assert {:ok, "foo"} = PBCS.decrypt({"", cipher_text}, password: "bar")
+    end
+  end
 end
